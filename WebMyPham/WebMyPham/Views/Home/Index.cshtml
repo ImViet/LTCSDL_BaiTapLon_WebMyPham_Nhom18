@@ -1,0 +1,288 @@
+﻿@model IEnumerable<WebMyPham.Models.SanPham>
+@using WebMyPham.Models
+@using PagedList.Mvc;
+
+    <!-- Carousel Default -->
+    <section class="carousel-default">
+        <div id="carousel-default" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-default" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-default" data-slide-to="1" class=""></li>
+                <li data-target="#carousel-default" data-slide-to="2" class=""></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <!-- NOTE: Bootstrap v4 changes class name to carousel-item -->
+                <div class="item active">
+                    <img src="~/Image/slider1.jpeg" alt="First slide" style="padding-top:15px">
+                </div>
+                <div class="item">
+                    <img src="~/Image/slider2.jpg" alt="Second slide" style="padding-top:15px">
+                </div>
+                <div class="item">
+                    <img src="~/Image/slider3.jpg" alt="Third slide" style="padding-top:15px" />
+                </div>
+            </div>
+            <a class="left carousel-control" href="#carousel-default" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-default" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+    <!-- /end Carousel Default -->
+    <!-- Top san pham noi bat-->
+    <div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center; margin-top:10px;">
+        <span style="font-size: 20px; background-color: white; padding: 0 10px;">
+            SẢN PHẨM NỔI BẬT <!--Padding is optional-->
+        </span>
+    </div>
+    <div class="container body-content">
+        <div class="top-product">
+            <div class="top-items">
+                <img src="~/Image/suaruamatLaRochePosay.png" alt="New York" class="item-img">
+                <div class="item-body">
+                    <h3 class="item-heading">Xuất xứ: Pháp</h3>
+                    <p class="item-datetime">Fri 27 Nov 2016</p>
+                    <p class="item-desc">La Roche-Posay Effaclar gel sản phẩm gel rửa mặt phù hợp với cả những làn da “khó chiều” nhất: tình trạng da dầu, da mẩn đỏ hay nổi mụn nhiều...</p>
+                    <a href="@Url.Action("Details", "SanPham", new { id = "RM04"})" class="item-buy-btn">Xem chi tiết</a>
+                </div>
+            </div>
+
+            <div class="top-items">
+                <img src="~/Image/sonHeraSensual.png" alt="New York" class="item-img">
+                <div class="item-body">
+                    <h3 class="item-heading">Xuất xứ: Hàn Quốc</h3>
+                    <p class="item-datetime">Sat 28 Nov 2016</p>
+                    <p class="item-desc">Với thiết kế vỏ son sang trọng và cực kì bắt mắt, dòng son Sensual Fresh Nude Tint toác lên sự tinh tế, ngọt ngào...</p>
+                    <a href="@Url.Action("Details", "SanPham", new { id = "TDM04"})" class="item-buy-btn">Xem chi tiết</a>
+                </div>
+            </div>
+
+            <div class="top-items">
+                <img src="~/Image/dautaytrangShuUemura.png" alt="New York" class="item-img">
+                <div class="item-body">
+                    <h3 class="item-heading">Xuất xứ: Nhật Bản</h3>
+                    <p class="item-datetime">Sun 29 Nov 2016</p>
+                    <p class="item-desc">Shu Uemura là hãng mỹ phẩm Châu Á thành công nhất, có sức ảnh hưởng mạnh mẽ nhất đến khu vực Châu Âu-Châu Mỹ...</p>
+                    <a href="@Url.Action("Details", "SanPham", new { id = "TT05"})" class="item-buy-btn">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Danh sach san pham-->
+    <div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center; margin:10px 0;">
+        <span style="font-size: 20px; background-color: white; padding: 0 10px;">
+            SẢN PHẨM <!--Padding is optional-->
+        </span>
+    </div>
+    @{
+        var count = 0;
+    }
+<ul class="container-menu">
+    @foreach (var item in Model)
+    {
+        if (count < 8)
+        {
+            //Fix name bang code
+            var name = "";
+            if (item.TenSP.Length < 35)
+            {
+                name = item.TenSP;
+            }
+            else
+            {
+                name = item.TenSP.Substring(0, 35) + "...";
+            }
+            <li class="product col-sm-3 col-lg-3">
+                <a class="item-image" href="@Url.Action("Details", "SanPham", new { id = item.MaSP })" title="@item.TenSP">
+                    @Html.Image("../Image/" + item.HinhSP, "alt", "210", "210")
+                </a>
+
+                <h4 class="name"><a href="@Url.Action("Details", "SanPham", new { id = item.MaSP })">@Html.DisplayFor(modelItem => name)</a></h4>
+                <hr />
+                <p class="price-label" style="color: #e68b24">@string.Format("{0:#,##0.##}₫", item.GiaTien)</p>
+                <br />
+            </li>
+        count++;
+        }
+    }
+</ul>
+<div class="text-center">
+    <a class="btn-allview" href="@Url.Action("Index","HienThiSanPham")"> Xem tất cả sản phẩm</a>
+</div>
+<style>
+    * {
+        /*box-sizing:border-box;*/
+    }
+
+    .product {
+        background-color: white;
+        text-align: center;
+        font-size: 16px;
+        font-family: Lato, sans-serif;
+        list-style-type: none;
+        width: 25%;
+        height: 300px;
+        margin: 15px 0px;
+        transition: transform .5s;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 0;
+        border-top: 2px solid #eeeeee;
+    }
+
+    .top-product {
+        margin: 32px -8px 0px;
+        padding-bottom: 48px;
+    }
+
+    .top-items {
+        float: left;
+        width: 33.33%;
+        padding: 0 8px;
+        animation: imageFadeIn ease 2s;
+    }
+
+        .top-items:hover {
+            box-shadow: 0 0 10px #ccc;
+        }
+
+    .item-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 35px;
+        width: 87%;
+    }
+
+        .item-img:hover {
+            transform: scale(1.2);
+            transition: transform .5s;
+        }
+
+    .item-body {
+        background-color: white;
+        padding: 16px;
+    }
+
+    .item-heading {
+        font-weight: 700;
+        font-size: 15px;
+        padding-top: 5px;
+    }
+
+    .item-datetime {
+        margin-top: 15px;
+        opacity: 70%;
+    }
+
+    .item-desc {
+        margin-top: 15px;
+        line-height: 1.4;
+    }
+
+    .item-buy-btn {
+        color: black;
+        background-color: white;
+        border: 1px solid #0c6363;
+        text-decoration: none;
+        margin-top: 15px;
+        padding: 11px 16px;
+        display: inline-block;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+        .item-buy-btn:hover {
+            color: white;
+            background-color: #0c6363;
+            text-decoration: none;
+        }
+
+    @@keyframes imageFadeIn {
+        from {
+            transform: translateY(-150px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    }
+
+    .item-image > img:hover {
+        transform: scale(1.2);
+        transition: transform .5s;
+        cursor: pointer;
+    }
+
+    .name {
+        padding-top: 12px;
+        white-space: pre;
+        font-size: 16px;
+    }
+
+        .name > a {
+            color: black;
+        }
+
+            .name > a:hover {
+                color: #b61919;
+                text-decoration: none;
+            }
+
+        .name:hover {
+            color: #d62f2f;
+            cursor: pointer;
+        }
+
+    .product {
+        background-color: white;
+        text-align: center;
+        font-size: 16px;
+        font-family: Lato, sans-serif;
+        list-style-type: none;
+        height: 300px;
+        margin: 15px 0px;
+        transition: transform .5s;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 0;
+        border-top: 2px solid #eeeeee;
+    }
+
+    .btn-allview {
+        background-color: white;
+        border: none;
+        color: black;
+        padding: 8px 16px;
+        display: inline-block;
+        font-size: 16px;
+        margin: auto;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        text-decoration: none;
+        border: 2px solid #c47135;
+    }
+        .btn-allview:hover {
+            background-color: #0c6363;
+            color: #FF2;
+            text-decoration: none;
+        }
+</style>
+
+
+
